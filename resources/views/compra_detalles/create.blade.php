@@ -1,0 +1,36 @@
+@extends('template.master')
+
+@section('contenido')
+<div class="container">
+    <h1>Crear Detalle de Compra</h1>
+    <form action="{{ route('compra_detalles.store') }}" method="POST">
+        @csrf
+        <label for="id_compra">Compra</label>
+        <select name="id_compra" id="id_compra" required>
+            <option value="">Seleccionar compra</option>
+            @foreach($compras as $id => $nombre)
+                <option value="{{ $id }}">{{ $nombre }}</option>
+            @endforeach
+        </select>
+        <br><br>
+        <label for="id_producto">Producto</label>
+        <select name="id_producto" id="id_producto" required>
+            <option value="">Seleccionar producto</option>
+            @foreach($refacciones as $id => $nombre)
+                <option value="{{ $id }}">{{ $nombre }}</option>
+            @endforeach
+        </select>
+        <br><br>
+        <label for="cantidad">Cantidad</label>
+        <input type="number" name="cantidad" id="cantidad" placeholder="Ingresa cantidad" required>
+        <br><br>
+        <label for="precio_individual">Precio individual</label>
+        <input type="number" name="precio_individual" id="precio_individual" placeholder="Ingresa precio" step="0.01" required>
+        <br><br>
+        <label for="subtotal">Subtotal</label>
+        <input type="number" name="subtotal" id="subtotal" placeholder="Ingresa subtotal" step="0.01" required>
+        <br><br>
+        <button type="submit">Guardar Detalle</button>
+    </form>
+</div>
+@endsection

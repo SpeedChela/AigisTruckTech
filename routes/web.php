@@ -2,6 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\{
+    PaisesController,
+    EstadosController,
+    MunicipiosController,
+    EmpresasController,
+    ClientesController,
+    ProveedoresController,
+    RefaccionesController,
+    ComprasController,
+    CompraDetallesController,
+    VentasController,
+    VentaDetallesController,
+    EstadoEnviosController,
+    UsuariosController
+};
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +42,16 @@ Route::get('inicio', function () {
 Route::get('usa_control',[InicioController::class, 'usa_control_1']);
 
 Route::get('usa_control_y_param/{var}', [InicioController::class, 'usa_control_y_param_1']);
+Route::resource('paises', PaisesController::class);
+Route::resource('estados', EstadosController::class);
+Route::resource('municipios', MunicipiosController::class);
+Route::resource('empresas', EmpresasController::class);
+Route::resource('clientes', ClientesController::class);
+Route::resource('proveedores', ProveedoresController::class);
+Route::resource('refacciones', RefaccionesController::class);
+Route::resource('compras', ComprasController::class);
+Route::resource('compra_detalles', CompraDetallesController::class);
+Route::resource('ventas', VentasController::class);
+Route::resource('venta_detalles', VentaDetallesController::class);
+Route::resource('estado_envios', EstadoEnviosController::class);
+Route::resource('usuarios', UsuariosController::class);

@@ -1,0 +1,40 @@
+@extends('template.master')
+
+@section('contenido')
+<div class="container">
+    <h1>Crear Compra</h1>
+    <form action="{{ route('compras.store') }}" method="POST">
+        @csrf
+        <label for="id_proveedor">Proveedor</label>
+        <select name="id_proveedor" id="id_proveedor" required>
+            <option value="">Seleccionar proveedor</option>
+            @foreach($proveedores as $id => $nombre)
+                <option value="{{ $id }}">{{ $nombre }}</option>
+            @endforeach
+        </select>
+        <br><br>
+        <label for="id_usuario">Usuario</label>
+        <select name="id_usuario" id="id_usuario" required>
+            <option value="">Seleccionar usuario</option>
+            @foreach($usuarios as $id => $nombre)
+                <option value="{{ $id }}">{{ $nombre }}</option>
+            @endforeach
+        </select>
+        <br><br>
+        <label for="fecha_compra">Fecha de compra</label>
+        <input type="date" name="fecha_compra" id="fecha_compra" required>
+        <br><br>
+        <label for="total">Total</label>
+        <input type="number" name="total" id="total" placeholder="Ingresa total" step="0.01" required>
+        <br><br>
+        <label for="status">Estatus:</label>
+        <select name="status" id="status" required>
+            <option value="">Seleccionar ...</option>
+            <option value="1">Activo</option>
+            <option value="0">Baja</option>
+        </select>
+        <br><br>
+        <button type="submit">Guardar Compra</button>
+    </form>
+</div>
+@endsection

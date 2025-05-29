@@ -2,83 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Estado;
 use Illuminate\Http\Request;
 
 class EstadosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $estados = Estado::all();
+        return view('estados.index', [
+            'titulo' => 'Estados',
+            'singular' => 'Estado',
+            'ruta' => 'estados',
+            'columnas' => ['ID', 'Nombre', 'Clave', 'País', 'Status'],
+            'campos' => ['id', 'nombre', 'clave', 'pais_id', 'status'],
+            'registros' => $estados
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('estados.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $request->validate([
+            'nombre' => 'required|max:80',
+            'clave' => 'required|max:5',
+            'pais_id' => 'required|integer',
+            'status' => 'required|integer'
+        ]);
+        Estado::create($request->all());
+        return redirect()->route('estados.index')->with('success', 'Estado creado correctamente');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $estado = Estado::findOrFail($id);
+        return view('estados.read', compact('estado'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $estado = Estado::findOrFail($id);
+        return view('estados.edit', compact('estado'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $request->validate([
+            'nombre' => 'required|max:80',
+            'clave' => 'required|max:5',
+            'pais_id' => 'required|integer',
+            'status' => 'required|integer'
+        ]);
+        $estado = Estado::findOrFail($id);
+        $estado->update($request->all());
+        return redirect()->route('estados.index')->with('success', 'Estado actualizado correctamente');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $estado = Estado::findOrFail($id);
+        $estado->delete();
+        return redirect()->route('estados.index')->with('success', 'Estado eliminado correctamente');
     }
 }

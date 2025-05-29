@@ -2,83 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
-    {
-        //
+{
+    $usuarios = \App\Models\Usuarios::all();
+    return view('usuarios.index', [
+        'titulo' => 'Usuarios',
+        'singular' => 'Usuario',
+        'ruta' => 'usuarios',
+        'columnas' => ['ID', 'Nombre', 'Email', 'Teléfono', 'Rol', 'Status'],
+        'campos' => ['id', 'nombre', 'email', 'telefono', 'rol', 'status'],
+        'registros' => $usuarios
+    ]);
+}
+
+    public function create() {
+        return view('usuarios.create');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request) {
+        $request->validate([
+            'nombre' => 'required|max:80',
+            'email' => 'required|email|max:255',
+            'password' => 'required|max:255',
+            'telefono' => 'nullable|max:20',
+            'rol' => 'required|integer',
+            'status' => 'required|integer'
+        ]);
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        Usuarios::create($data);
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function show($id) {
+        $usuario = Usuarios::findOrFail($id);
+        return view('usuarios.read', compact('usuario'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function edit($id) {
+        $usuario = Usuarios::findOrFail($id);
+        return view('usuarios.edit', compact('usuario'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $request->validate([
+            'nombre' => 'required|max:80',
+            'email' => 'required|email|max:255',
+            'password' => 'nullable|max:255',
+            'telefono' => 'nullable|max:20',
+            'rol' => 'required|integer',
+            'status' => 'required|integer'
+        ]);
+        $usuario = Usuarios::findOrFail($id);
+        $data = $request->all();
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
+        $usuario->update($data);
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $usuario = Usuarios::findOrFail($id);
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
     }
 }

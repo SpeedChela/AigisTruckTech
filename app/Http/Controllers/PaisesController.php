@@ -2,83 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pais;
 use Illuminate\Http\Request;
 
 class PaisesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $paises = Pais::all();
+        return view('paises.index', [
+            'titulo' => 'Países',
+            'singular' => 'País',
+            'ruta' => 'paises',
+            'columnas' => ['ID', 'Nombre', 'Clave', 'Status'],
+            'campos' => ['id', 'nombre', 'clave', 'status'],
+            'registros' => $paises
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('paises.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $request->validate([
+            'nombre' => 'required|max:80',
+            'clave' => 'required|max:5',
+            'status' => 'required|integer'
+        ]);
+        Pais::create($request->all());
+        return redirect()->route('paises.index')->with('success', 'País creado correctamente');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $pais = Pais::findOrFail($id);
+        return view('paises.read', compact('pais'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $pais = Pais::findOrFail($id);
+        return view('paises.edit', compact('pais'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $request->validate([
+            'nombre' => 'required|max:80',
+            'clave' => 'required|max:5',
+            'status' => 'required|integer'
+        ]);
+        $pais = Pais::findOrFail($id);
+        $pais->update($request->all());
+        return redirect()->route('paises.index')->with('success', 'País actualizado correctamente');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $pais = Pais::findOrFail($id);
+        $pais->delete();
+        return redirect()->route('paises.index')->with('success', 'País eliminado correctamente');
     }
 }

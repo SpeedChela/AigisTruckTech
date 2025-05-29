@@ -2,83 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Venta_detalles;
 use Illuminate\Http\Request;
 
 class VentaDetallesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
-    {
-        //
+{
+    $venta_detalles = \App\Models\Venta_detalles::all();
+    return view('venta_detalles.index', [
+        'titulo' => 'Detalles de Venta',
+        'singular' => 'Detalle de Venta',
+        'ruta' => 'venta_detalles',
+        'columnas' => ['ID', 'Venta', 'Producto', 'Cantidad', 'Precio', 'Subtotal'],
+        'campos' => ['id', 'id_venta', 'id_producto', 'cantidad', 'precio_individual', 'subtotal'],
+        'registros' => $venta_detalles
+    ]);
+}
+
+    public function create() {
+        return view('venta_detalles.create');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request) {
+        $request->validate([
+            'id_venta' => 'required|integer',
+            'id_producto' => 'required|integer',
+            'cantidad' => 'required|integer',
+            'precio_individual' => 'required|numeric',
+            'subtotal' => 'required|numeric'
+        ]);
+        Venta_detalles::create($request->all());
+        return redirect()->route('venta_detalles.index')->with('success', 'Detalle de venta creado correctamente');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function show($id) {
+        $detalle = Venta_detalles::findOrFail($id);
+        return view('venta_detalles.read', compact('detalle'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function edit($id) {
+        $detalle = Venta_detalles::findOrFail($id);
+        return view('venta_detalles.edit', compact('detalle'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $request->validate([
+            'id_venta' => 'required|integer',
+            'id_producto' => 'required|integer',
+            'cantidad' => 'required|integer',
+            'precio_individual' => 'required|numeric',
+            'subtotal' => 'required|numeric'
+        ]);
+        $detalle = Venta_detalles::findOrFail($id);
+        $detalle->update($request->all());
+        return redirect()->route('venta_detalles.index')->with('success', 'Detalle de venta actualizado correctamente');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $detalle = Venta_detalles::findOrFail($id);
+        $detalle->delete();
+        return redirect()->route('venta_detalles.index')->with('success', 'Detalle de venta eliminado correctamente');
     }
 }
