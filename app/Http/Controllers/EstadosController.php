@@ -65,4 +65,15 @@ class EstadosController extends Controller
         $estado->delete();
         return redirect()->route('estados.index')->with('success', 'Estado eliminado correctamente');
     }
+
+    public function getEstadosByPais($pais_id)
+    {
+        $estados = Estados::where('pais_id', $pais_id)
+                        ->where('status', 1)
+                        ->select('id', 'nombre')
+                        ->orderBy('nombre')
+                        ->get();
+        
+        return response()->json($estados);
+    }
 }

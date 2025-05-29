@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Municipios extends Model
 {
     protected $table = 'municipios';
-    protected $fillable = ['estado_id', 'nombre', 'status'];
+    protected $fillable = ['nombre', 'clave', 'estado_id', 'status'];
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estado_id');
+    }
 }

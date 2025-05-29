@@ -5,11 +5,12 @@
     <h1>Crear Refacción</h1>
     <form action="{{ route('refacciones.store') }}" method="POST">
         @csrf
+        <input type="hidden" name="status" value="1">
         <label for="id_proveedor">Proveedor</label>
         <select name="proveedor_id" id="proveedor_id" required>
-        <option value="">Seleccionar proveedor</option>
+            <option value="">Seleccionar proveedor</option>
             @foreach($proveedores as $proveedor)
-            <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
             @endforeach
         </select>
         <br><br>
@@ -24,13 +25,6 @@
         <br><br>
         <label for="stock">Stock</label>
         <input type="number" name="stock" id="stock" placeholder="Ingresa stock" required>
-        <br><br>
-        <label for="status">Estatus:</label>
-        <select name="status" id="status" required>
-            <option value="">Seleccionar ...</option>
-            <option value="1">Activo</option>
-            <option value="0">Baja</option>
-        </select>
         <br><br>
         <button type="submit">Guardar Refacción</button>
     </form>

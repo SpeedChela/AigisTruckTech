@@ -5,6 +5,7 @@
     <h1>Crear Empresa</h1>
     <form action="{{ route('empresas.store') }}" method="POST">
         @csrf
+        <input type="hidden" name="status" value="1">
         <label for="id_usuario_up">Usuario</label>
         <select name="id_usuario_up" id="id_usuario_up" required>
             <option value="">Seleccionar usuario</option>
@@ -21,13 +22,6 @@
         <br><br>
         <label for="correo">Correo</label>
         <input type="email" name="correo" id="correo" placeholder="Ingresa correo" required>
-        <br><br>
-        <label for="status">Estatus:</label>
-        <select name="status" id="status" required>
-            <option value="">Seleccionar ...</option>
-            <option value="1">Activo</option>
-            <option value="0">Baja</option>
-        </select>
         <br><br>
         <button type="submit">Guardar Empresa</button>
     </form>

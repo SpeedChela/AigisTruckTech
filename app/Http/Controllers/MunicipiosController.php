@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Municipios;
 use App\Models\Estados;
+use App\Models\Paises;
 use Illuminate\Http\Request;
 
 class MunicipiosController extends Controller
@@ -21,9 +22,13 @@ class MunicipiosController extends Controller
         ]);
     }
 
-    public function create() {
-        $estados = \App\Models\Estados::all();
-        return view('municipios.create', compact('estados'));
+    public function create()
+    {
+        $paises = Paises::where('status', 1)
+                      ->orderBy('nombre')
+                      ->get();
+        
+        return view('municipios.create', compact('paises'));
     }
 
     public function store(Request $request) {

@@ -5,6 +5,7 @@
     <h1>Crear Compra</h1>
     <form action="{{ route('compras.store') }}" method="POST">
         @csrf
+        <input type="hidden" name="status" value="1">
         <label for="id_proveedor">Proveedor</label>
         <select name="proveedor_id" id="proveedor_id" required>
             <option value="">Seleccionar proveedor</option>
@@ -26,13 +27,6 @@
         <br><br>
         <label for="total">Total</label>
         <input type="number" name="total" id="total" placeholder="Ingresa total" step="0.01" required>
-        <br><br>
-        <label for="status">Estatus:</label>
-        <select name="status" id="status" required>
-            <option value="">Seleccionar ...</option>
-            <option value="1">Activo</option>
-            <option value="0">Baja</option>
-        </select>
         <br><br>
         <button type="submit">Guardar Compra</button>
     </form>

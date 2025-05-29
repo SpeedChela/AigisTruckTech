@@ -61,3 +61,4 @@ Route::resource('usuarios', UsuariosController::class);
 // Rutas AJAX
 Route::get('combo_estado/{id_pais}', [AjaxController::class, 'cambia_combo_estado']);
 Route::get('combo_municipio/{id_estado}', [AjaxController::class, 'cambia_combo_municipio']);
+Route::get('/combo_estado/{pais_id}', [App\Http\Controllers\EstadoController::class, 'getEstadosByPais']);

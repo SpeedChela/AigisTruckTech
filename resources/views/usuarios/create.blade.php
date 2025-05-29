@@ -10,14 +10,19 @@
         $('#id_estado').append('<option value="0">Seleccionar...</option>');
         $('#municipio_id').append('<option value="0">Seleccionar...</option>');
         if(id_pais == 0) return;
-        var ruta = "/combo_estado/" + id_pais;
+        
         $.ajax({
             type: 'GET',
-            url: ruta,
+            url: "{{ url('/combo_estado') }}/" + id_pais,
+            dataType: 'json',
             success: function(data){
                 data.forEach(function(estado) {
                     $('#id_estado').append('<option value="' + estado.id + '">' + estado.nombre + '</option>');
                 });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error al cargar estados:', error);
+                alert('Error al cargar los estados. Por favor, intente nuevamente.');
             }
         });
     }
@@ -26,14 +31,19 @@
         $("#municipio_id").empty();
         $('#municipio_id').append('<option value="0">Seleccionar...</option>');
         if(id_estado == 0) return;
-        var ruta = "/combo_municipio/" + id_estado;
+        
         $.ajax({
             type: 'GET',
-            url: ruta,
+            url: "{{ url('/combo_municipio') }}/" + id_estado,
+            dataType: 'json',
             success: function(data){
                 data.forEach(function(municipio) {
                     $('#municipio_id').append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
                 });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error al cargar municipios:', error);
+                alert('Error al cargar los municipios. Por favor, intente nuevamente.');
             }
         });
     }
@@ -42,6 +52,7 @@
     <h1>Crear Usuario</h1>
     <form action="{{ route('usuarios.store') }}" method="POST">
         @csrf
+        <input type="hidden" name="status" value="1">
         <label for="nombre">Nombre</label>
         <input type="text" name="nombre" id="nombre" placeholder="Ingresa nombre" required>
         <br><br>
@@ -57,13 +68,6 @@
             <option value="admin">Admin</option>
             <option value="vendedor">Vendedor</option>
             <option value="cliente">Cliente</option>
-        </select>
-        <br><br>
-        <label for="status">Estatus:</label>
-        <select name="status" id="status" required>
-            <option value="">Seleccionar ...</option>
-            <option value="1">Activo</option>
-            <option value="0">Baja</option>
         </select>
         <br><br>
         <label>Seleccionar país</label>
@@ -87,6 +91,5 @@
         <button type="submit">Guardar Usuario</button>
     </form>
 </div>
-
 
 @endsection

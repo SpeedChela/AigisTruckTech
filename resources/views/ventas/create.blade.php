@@ -5,6 +5,7 @@
     <h1>Crear Venta</h1>
     <form action="{{ route('ventas.store') }}" method="POST">
         @csrf
+        <input type="hidden" name="status" value="1">
         <label for="id_usuario">Usuario</label>
         <select name="usuario_id" id="usuario_id" required>
             <option value="">Seleccionar usuario</option>
@@ -30,13 +31,6 @@
         <br><br>
         <label for="total">Total</label>
         <input type="number" name="total" id="total" placeholder="Ingresa total" step="0.01" required>
-        <br><br>
-        <label for="status">Estatus:</label>
-        <select name="status" id="status" required>
-            <option value="">Seleccionar ...</option>
-            <option value="1">Activo</option>
-            <option value="0">Baja</option>
-        </select>
         <br><br>
         <button type="submit">Guardar Venta</button>
     </form>
