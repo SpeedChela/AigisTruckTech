@@ -6,7 +6,6 @@ use App\Http\Controllers\{
     PaisesController,
     EstadosController,
     MunicipiosController,
-    EmpresasController,
     ClientesController,
     ProveedoresController,
     RefaccionesController,
@@ -17,6 +16,8 @@ use App\Http\Controllers\{
     EstadoEnviosController,
     UsuariosController
 };
+
+use App\Http\Controllers\AjaxController;
 
 
 /*
@@ -55,3 +56,7 @@ Route::resource('ventas', VentasController::class);
 Route::resource('venta_detalles', VentaDetallesController::class);
 Route::resource('estado_envios', EstadoEnviosController::class);
 Route::resource('usuarios', UsuariosController::class);
+
+// Rutas AJAX
+Route::get('combo_estado/{id_pais}', [AjaxController::class, 'cambia_combo_estado']);
+Route::get('combo_municipio/{id_estado}', [AjaxController::class, 'cambia_combo_municipio']);

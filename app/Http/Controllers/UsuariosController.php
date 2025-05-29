@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuarios;
+use App\Models\Paises;
 use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
@@ -20,9 +21,19 @@ class UsuariosController extends Controller
     ]);
 }
 
-    public function create() {
-        return view('usuarios.create');
-    }
+public function create()
+{
+    // Trae todos los países activos
+    $paises = \App\Models\Paises::select('id','nombre')
+        ->where('status', 1)
+        ->orderBy('nombre')
+        ->get();
+
+    // Retorna la vista con los países
+    return view('usuarios.create')
+        ->with('paises', $paises);
+        // ->with('roles', $roles); // Solo si quieres usar roles desde el controlador
+}
 
     public function store(Request $request) {
         $request->validate([
@@ -44,10 +55,17 @@ class UsuariosController extends Controller
         return view('usuarios.read', compact('usuario'));
     }
 
-    public function edit($id) {
-        $usuario = Usuarios::findOrFail($id);
-        return view('usuarios.edit', compact('usuario'));
-    }
+    public function edit($id)
+{
+    $usuario = \App\Models\Usuarios::findOrFail($id);
+    $paises = \App\Models\Paises::select('id','nombre')
+        ->where('status', 1)
+        ->orderBy('nombre')->get();
+
+    return view('usuarios.edit')
+        ->with('usuario', $usuario)
+        ->with('paises', $paises);
+}
 
     public function update(Request $request, $id) {
         $request->validate([
