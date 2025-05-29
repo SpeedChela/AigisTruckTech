@@ -31,7 +31,12 @@
                 <tr>
                   <td>{{ $proveedor->id }}</td>
                   <td>{{ $proveedor->nombre }}</td>
-                  <td>{{ $proveedor->telefono }}</td>
+                  <td>
+                    <input type="text"
+                          value="{{ $proveedor->telefono }}"
+                          class="form-control form-control-sm"
+                          onblur="actualizarTelefono({{ $proveedor->id }}, this.value)">
+                  </td>
                   <td>{{ $proveedor->email }}</td>
                   <td>{{ $proveedor->municipio_id }}</td>
                   <td>{{ $proveedor->status }}</td>
@@ -56,4 +61,24 @@
     </article>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function actualizarTelefono(id, telefono) {
+    $.ajax({
+        url: '/proveedores/' + id + '/actualizar-telefono',
+        method: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            telefono: telefono
+        },
+        success: function(response) {
+            // Opcional: muestra un mensaje o cambia el color de la celda
+            // alert('Teléfono actualizado');
+        },
+        error: function(xhr) {
+            alert('Error al actualizar el teléfono');
+        }
+    });
+}
+</script>
 @endsection

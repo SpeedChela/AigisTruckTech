@@ -8,9 +8,26 @@ use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
 {
-    public function index()
+public function index(Request $request)
 {
-    $usuarios = \App\Models\Usuarios::all();
+    $query = \App\Models\Usuarios::query();
+
+    // Filtros
+    if ($request->filled('nombre')) {
+        $query->where('nombre', 'like', '%' . $request->nombre . '%');
+    }
+    if ($request->filled('email')) {
+        $query->where('email', 'like', '%' . $request->email . '%');
+    }
+    if ($request->filled('rol')) {
+        $query->where('rol', $request->rol);
+    }
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
+
+    $usuarios = $query->get();
+
     return view('usuarios.index', [
         'titulo' => 'Usuarios',
         'singular' => 'Usuario',
@@ -92,4 +109,5 @@ public function create()
         $usuario->delete();
         return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente');
     }
+
 }

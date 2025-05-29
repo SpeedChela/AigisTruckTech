@@ -69,4 +69,13 @@ class ProveedoresController extends Controller
         $proveedor->delete();
         return redirect()->route('proveedores.index')->with('success', 'Proveedor eliminado correctamente');
     }
+
+    public function actualizarTelefono(Request $request, $id)
+    {
+        $proveedor = \App\Models\Proveedores::findOrFail($id);
+        $proveedor->telefono = $request->telefono;
+        $proveedor->save();
+
+        return response()->json(['success' => true]);
+    }
 }

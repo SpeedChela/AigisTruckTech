@@ -40,15 +40,16 @@ Route::get('inicio', function () {
     return view('inicio_vista');
 });
 
-Route::get('usa_control',[InicioController::class, 'usa_control_1']);
 
+
+Route::get('usa_control',[InicioController::class, 'usa_control_1']);
 Route::get('usa_control_y_param/{var}', [InicioController::class, 'usa_control_y_param_1']);
 Route::resource('paises', PaisesController::class);
 Route::resource('estados', EstadosController::class);
 Route::resource('municipios', MunicipiosController::class);
-Route::resource('empresas', EmpresasController::class);
 Route::resource('clientes', ClientesController::class);
 Route::resource('proveedores', ProveedoresController::class);
+Route::post('proveedores/{id}/actualizar-telefono', [ProveedoresController::class, 'actualizarTelefono']);
 Route::resource('refacciones', RefaccionesController::class);
 Route::resource('compras', ComprasController::class);
 Route::resource('compra_detalles', CompraDetallesController::class);

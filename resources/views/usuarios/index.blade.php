@@ -1,6 +1,36 @@
 @extends('template.master')
 
 @section('contenido')
+<form method="GET" action="{{ route('usuarios.index') }}" class="mb-3">
+  <div class="row">
+    <div class="col">
+      <input type="text" name="nombre" class="form-control" placeholder="Nombre" value="{{ request('nombre') }}">
+    </div>
+    <div class="col">
+      <input type="text" name="email" class="form-control" placeholder="Email" value="{{ request('email') }}">
+    </div>
+    <div class="col">
+      <select name="rol" class="form-control">
+        <option value="">Rol</option>
+        <option value="1" @if(request('rol')=='1') selected @endif>Admin</option>
+        <option value="2" @if(request('rol')=='2') selected @endif>Vendedor</option>
+        <option value="3" @if(request('rol')=='3') selected @endif>Cliente</option>
+      </select>
+    </div>
+    <div class="col">
+      <select name="status" class="form-control">
+        <option value="">Estatus</option>
+        <option value="1" @if(request('status')=='1') selected @endif>Activo</option>
+        <option value="0" @if(request('status')=='0') selected @endif>Baja</option>
+      </select>
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary">Buscar</button>
+      <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Limpiar</a>
+    </div>
+  </div>
+</form>
+
 <div id="wrapper">
   <div id="main">
     <article class="post">
