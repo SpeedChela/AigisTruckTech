@@ -18,8 +18,8 @@
         <select name="municipio_id" id="municipio_id" required>
             <option value="">Seleccionar municipio</option>
             @foreach($municipios as $municipio)
-            <option value="{{ $municipio->id }}">{{ $municipio->nombre }}</option>
-            @endforeach
+        <option value="{{ $municipio->id }}">{{ $municipio->nombre }}</option>
+    @endforeach
         </select>
         <br><br>
         <label for="status">Estatus:</label>
