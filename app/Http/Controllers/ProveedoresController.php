@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proveedores;
+use App\Models\Municipios;
 use Illuminate\Http\Request;
 
 class ProveedoresController extends Controller
@@ -21,8 +22,9 @@ class ProveedoresController extends Controller
 }
 
     public function create() {
-        return view('proveedores.create');
-    }
+    $municipios = Municipios::all();
+    return view('proveedores.create', compact('municipios'));
+}
 
     public function store(Request $request) {
         $request->validate([
@@ -43,9 +45,10 @@ class ProveedoresController extends Controller
     }
 
     public function edit($id) {
-        $proveedor = Proveedores::findOrFail($id);
-        return view('proveedores.edit', compact('proveedor'));
-    }
+    $proveedor = Proveedores::findOrFail($id);
+    $municipios = Municipios::all();
+    return view('proveedores.edit', compact('proveedor', 'municipios'));
+}
 
     public function update(Request $request, $id) {
         $request->validate([

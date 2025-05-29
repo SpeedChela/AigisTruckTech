@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Ventas;
+use App\Models\Refacciones;
+use App\Models\Detalles_ventas;
 use App\Models\Venta_detalles;
 use Illuminate\Http\Request;
 
@@ -21,8 +23,10 @@ class VentaDetallesController extends Controller
 }
 
     public function create() {
-        return view('venta_detalles.create');
-    }
+    $ventas = Ventas::all();
+    $refacciones = Refacciones::all();
+    return view('venta_detalles.create', compact('ventas', 'refacciones'));
+}
 
     public function store(Request $request) {
         $request->validate([
@@ -36,15 +40,16 @@ class VentaDetallesController extends Controller
         return redirect()->route('venta_detalles.index')->with('success', 'Detalle de venta creado correctamente');
     }
 
-    public function show($id) {
-        $detalle = Venta_detalles::findOrFail($id);
-        return view('venta_detalles.read', compact('detalle'));
-    }
-
+   public function show($id) {
+    $detalle_venta = Venta_detalles::findOrFail($id);
+    return view('venta_detalles.read', compact('detalle_venta'));
+}
     public function edit($id) {
-        $detalle = Venta_detalles::findOrFail($id);
-        return view('venta_detalles.edit', compact('detalle'));
-    }
+    $detalle_venta = Venta_detalles::findOrFail($id);
+    $ventas = Ventas::all();
+    $refacciones = Refacciones::all();
+    return view('venta_detalles.edit', compact('detalle_venta', 'ventas', 'refacciones'));
+}
 
     public function update(Request $request, $id) {
         $request->validate([

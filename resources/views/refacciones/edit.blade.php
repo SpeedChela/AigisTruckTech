@@ -7,10 +7,12 @@
         @csrf
         @method('PATCH')
         <label for="id_proveedor">Proveedor</label>
-        <select name="id_proveedor" id="id_proveedor" required>
-            <option value="">Seleccionar proveedor</option>
-            @foreach($proveedores as $id => $nombre)
-                <option value="{{ $id }}" @if(old('id_proveedor', $refaccion->id_proveedor) == $id) selected @endif>{{ $nombre }}</option>
+        <select name="proveedor_id" id="proveedor_id" required>
+        <option value="">Seleccionar proveedor</option>
+            @foreach($proveedores as $proveedor)
+                <option value="{{ $proveedor->id }}" @if(old('proveedor_id', $refaccion->proveedor_id) == $proveedor->id) selected @endif>
+                    {{ $proveedor->nombre }}
+                </option>
             @endforeach
         </select>
         <br><br>

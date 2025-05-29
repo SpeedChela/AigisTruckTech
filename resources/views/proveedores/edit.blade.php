@@ -17,10 +17,12 @@
         <br><br>
         <label for="municipio_id">Municipio</label>
         <select name="municipio_id" id="municipio_id" required>
-            <option value="">Seleccionar municipio</option>
-            @foreach($municipios as $id => $nombre)
-                <option value="{{ $id }}" @if(old('municipio_id', $proveedor->municipio_id) == $id) selected @endif>{{ $nombre }}</option>
-            @endforeach
+        <option value="">Seleccionar municipio</option>
+        @foreach($municipios as $municipio)
+            <option value="{{ $municipio->id }}" @if(old('municipio_id', $proveedor->municipio_id) == $municipio->id) selected @endif>
+                {{ $municipio->nombre }}
+            </option>
+        @endforeach
         </select>
         <br><br>
         <label for="status">Estatus:</label>

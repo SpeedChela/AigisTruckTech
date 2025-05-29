@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra_detalles;
+use App\Models\Compras;
+use App\Models\Refacciones;
 use Illuminate\Http\Request;
 
 class CompraDetallesController extends Controller
@@ -21,8 +23,10 @@ class CompraDetallesController extends Controller
 }
 
     public function create() {
-        return view('compra_detalles.create');
-    }
+    $compras = Compras::all();
+    $refacciones = Refacciones::all();
+    return view('compra_detalles.create', compact('compras', 'refacciones'));
+}
 
     public function store(Request $request) {
         $request->validate([
@@ -37,13 +41,15 @@ class CompraDetallesController extends Controller
     }
 
     public function show($id) {
-        $detalle = Compra_detalles::findOrFail($id);
-        return view('compra_detalles.read', compact('detalle'));
+    $compra_detalles = Compra_detalles::findOrFail($id);
+    return view('compra_detalles.read', compact('compra_detalles'));
     }
 
     public function edit($id) {
-        $detalle = Compra_detalles::findOrFail($id);
-        return view('compra_detalles.edit', compact('detalle'));
+        $compra_detalle = Compra_detalles::findOrFail($id);
+        $compras = Compras::all();
+        $refacciones = Refacciones::all();
+        return view('compra_detalles.edit', compact('compra_detalle', 'compras', 'refacciones'));
     }
 
     public function update(Request $request, $id) {

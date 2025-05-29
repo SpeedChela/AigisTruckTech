@@ -6,16 +6,19 @@
     <form action="{{ route('estados.update', $estado->id) }}" method="POST">
         @csrf
         @method('PATCH')
-        <label for="pais_id">País</label>
-        <select name="pais_id" id="pais_id" required>
-            <option value="">Seleccionar país</option>
-            @foreach($paises as $id => $nombre)
-                <option value="{{ $id }}" @if(old('pais_id', $estado->pais_id) == $id) selected @endif>{{ $nombre }}</option>
-            @endforeach
-        </select>
-        <br><br>
         <label for="nombre">Nombre del estado</label>
         <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $estado->nombre) }}" required>
+        <br><br>
+        <label for="clave">Clave del estado</label>
+        <input type="text" name="clave" id="clave" value="{{ old('clave', $estado->clave) }}" required>
+        <br><br>
+        <label for="pais_id">País</label>
+        <select name="pais_id" id="pais_id" required>
+            <option value="">Seleccionar ...</option>
+            @foreach($paises as $pais)
+                <option value="{{ $pais->id }}" @if(old('pais_id', $estado->pais_id) == $pais->id) selected @endif>{{ $pais->nombre }}</option>
+            @endforeach
+        </select>
         <br><br>
         <label for="status">Estatus:</label>
         <select name="status" id="status" required>

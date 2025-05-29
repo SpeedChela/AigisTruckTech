@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
+use App\Models\Municipios;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -21,8 +22,9 @@ class ClientesController extends Controller
 }
 
     public function create() {
-        return view('clientes.create');
-    }
+    $municipios = Municipios::all();
+    return view('clientes.create', compact('municipios'));
+}
 
     public function store(Request $request) {
         $request->validate([
@@ -48,7 +50,8 @@ class ClientesController extends Controller
 
     public function edit($id) {
         $cliente = Clientes::findOrFail($id);
-        return view('clientes.edit', compact('cliente'));
+        $municipios = Municipios::all();
+        return view('clientes.edit', compact('cliente', 'municipios'));
     }
 
     public function update(Request $request, $id) {

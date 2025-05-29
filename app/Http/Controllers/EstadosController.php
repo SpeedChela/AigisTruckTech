@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Estado;
+use App\Models\Estados;
+use App\Models\Paises;
 use Illuminate\Http\Request;
 
 class EstadosController extends Controller
 {
     public function index()
     {
-        $estados = Estado::all();
+        $estados = Estados::all();
         return view('estados.index', [
             'titulo' => 'Estados',
             'singular' => 'Estado',
@@ -21,7 +22,8 @@ class EstadosController extends Controller
     }
 
     public function create() {
-        return view('estados.create');
+        $paises = Paises::all();
+        return view('estados.create', compact('paises'));
     }
 
     public function store(Request $request) {
@@ -31,18 +33,19 @@ class EstadosController extends Controller
             'pais_id' => 'required|integer',
             'status' => 'required|integer'
         ]);
-        Estado::create($request->all());
+        Estados::create($request->all());
         return redirect()->route('estados.index')->with('success', 'Estado creado correctamente');
     }
 
     public function show($id) {
-        $estado = Estado::findOrFail($id);
+        $estado = Estados::findOrFail($id);
         return view('estados.read', compact('estado'));
     }
 
     public function edit($id) {
-        $estado = Estado::findOrFail($id);
-        return view('estados.edit', compact('estado'));
+        $estado = Estados::findOrFail($id);
+        $paises = Paises::all();
+        return view('estados.edit', compact('estado', 'paises'));
     }
 
     public function update(Request $request, $id) {
@@ -52,13 +55,13 @@ class EstadosController extends Controller
             'pais_id' => 'required|integer',
             'status' => 'required|integer'
         ]);
-        $estado = Estado::findOrFail($id);
+        $estado = Estados::findOrFail($id);
         $estado->update($request->all());
         return redirect()->route('estados.index')->with('success', 'Estado actualizado correctamente');
     }
 
     public function destroy($id) {
-        $estado = Estado::findOrFail($id);
+        $estado = Estados::findOrFail($id);
         $estado->delete();
         return redirect()->route('estados.index')->with('success', 'Estado eliminado correctamente');
     }

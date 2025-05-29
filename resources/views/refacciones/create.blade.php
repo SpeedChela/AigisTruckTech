@@ -6,10 +6,10 @@
     <form action="{{ route('refacciones.store') }}" method="POST">
         @csrf
         <label for="id_proveedor">Proveedor</label>
-        <select name="id_proveedor" id="id_proveedor" required>
-            <option value="">Seleccionar proveedor</option>
-            @foreach($proveedores as $id => $nombre)
-                <option value="{{ $id }}">{{ $nombre }}</option>
+        <select name="proveedor_id" id="proveedor_id" required>
+        <option value="">Seleccionar proveedor</option>
+            @foreach($proveedores as $proveedor)
+            <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
             @endforeach
         </select>
         <br><br>

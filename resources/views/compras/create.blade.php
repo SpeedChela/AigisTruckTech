@@ -6,18 +6,18 @@
     <form action="{{ route('compras.store') }}" method="POST">
         @csrf
         <label for="id_proveedor">Proveedor</label>
-        <select name="id_proveedor" id="id_proveedor" required>
+        <select name="proveedor_id" id="proveedor_id" required>
             <option value="">Seleccionar proveedor</option>
-            @foreach($proveedores as $id => $nombre)
-                <option value="{{ $id }}">{{ $nombre }}</option>
+            @foreach($proveedores as $proveedor)
+                <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
             @endforeach
         </select>
         <br><br>
         <label for="id_usuario">Usuario</label>
-        <select name="id_usuario" id="id_usuario" required>
+        <select name="usuario_id" id="usuario_id" required>
             <option value="">Seleccionar usuario</option>
-            @foreach($usuarios as $id => $nombre)
-                <option value="{{ $id }}">{{ $nombre }}</option>
+            @foreach($usuarios as $usuario)
+                <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
             @endforeach
         </select>
         <br><br>

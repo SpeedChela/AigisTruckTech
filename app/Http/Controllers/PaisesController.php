@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pais;
+use App\Models\Paises;
 use Illuminate\Http\Request;
 
 class PaisesController extends Controller
 {
     public function index()
     {
-        $paises = Pais::all();
+        $paises = Paises::all();
         return view('paises.index', [
             'titulo' => 'Países',
             'singular' => 'País',
@@ -30,17 +30,17 @@ class PaisesController extends Controller
             'clave' => 'required|max:5',
             'status' => 'required|integer'
         ]);
-        Pais::create($request->all());
+        Paises::create($request->all());
         return redirect()->route('paises.index')->with('success', 'País creado correctamente');
     }
 
     public function show($id) {
-        $pais = Pais::findOrFail($id);
+        $pais = Paises::findOrFail($id);
         return view('paises.read', compact('pais'));
     }
 
     public function edit($id) {
-        $pais = Pais::findOrFail($id);
+        $pais = Paises::findOrFail($id);
         return view('paises.edit', compact('pais'));
     }
 
@@ -50,13 +50,13 @@ class PaisesController extends Controller
             'clave' => 'required|max:5',
             'status' => 'required|integer'
         ]);
-        $pais = Pais::findOrFail($id);
+        $pais = Paises::findOrFail($id);
         $pais->update($request->all());
         return redirect()->route('paises.index')->with('success', 'País actualizado correctamente');
     }
 
     public function destroy($id) {
-        $pais = Pais::findOrFail($id);
+        $pais = Paises::findOrFail($id);
         $pais->delete();
         return redirect()->route('paises.index')->with('success', 'País eliminado correctamente');
     }

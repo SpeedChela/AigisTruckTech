@@ -7,18 +7,22 @@
         @csrf
         @method('PATCH')
         <label for="id_usuario">Usuario</label>
-        <select name="id_usuario" id="id_usuario" required>
+       <select name="usuario_id" id="usuario_id" required>
             <option value="">Seleccionar usuario</option>
-            @foreach($usuarios as $id => $nombre)
-                <option value="{{ $id }}" @if(old('id_usuario', $venta->id_usuario) == $id) selected @endif>{{ $nombre }}</option>
+            @foreach($usuarios as $usuario)
+                <option value="{{ $usuario->id }}" @if(isset($venta) && old('usuario_id', $venta->usuario_id) == $usuario->id) selected @endif>
+                    {{ $usuario->nombre }}
+                </option>
             @endforeach
         </select>
         <br><br>
         <label for="id_cliente">Cliente</label>
-        <select name="id_cliente" id="id_cliente" required>
+        <select name="cliente_id" id="cliente_id" required>
             <option value="">Seleccionar cliente</option>
-            @foreach($clientes as $id => $nombre)
-                <option value="{{ $id }}" @if(old('id_cliente', $venta->id_cliente) == $id) selected @endif>{{ $nombre }}</option>
+            @foreach($clientes as $cliente)
+                <option value="{{ $cliente->id }}" @if(isset($venta) && old('cliente_id', $venta->cliente_id) == $cliente->id) selected @endif>
+                    {{ $cliente->nombre }}
+                </option>
             @endforeach
         </select>
         <br><br>

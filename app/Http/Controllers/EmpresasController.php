@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresas;
+use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
 class EmpresasController extends Controller
@@ -21,7 +22,8 @@ class EmpresasController extends Controller
     }
 
     public function create() {
-        return view('empresas.create');
+        $usuarios = Usuarios::all();
+        return view('empresas.create', compact('usuarios'));
     }
 
     public function store(Request $request) {
@@ -48,7 +50,8 @@ class EmpresasController extends Controller
 
     public function edit($id) {
         $empresa = Empresas::findOrFail($id);
-        return view('empresas.edit', compact('empresa'));
+        $usuarios = Usuarios::all();
+        return view('empresas.edit', compact('empresa', 'usuarios'));
     }
 
     public function update(Request $request, $id) {

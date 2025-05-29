@@ -13,7 +13,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="{{ asset('estilo/images/fevicon.png') }}" type="">
 
-  <title> Carint </title>
+  <title> Aigis Truck Tech </title>
 
 
   <!-- bootstrap core css -->

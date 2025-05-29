@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compras;
+use App\Models\Proveedores;
+use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
 class ComprasController extends Controller
@@ -21,7 +23,9 @@ class ComprasController extends Controller
 }
 
     public function create() {
-        return view('compras.create');
+        $proveedores = Proveedores::all();
+        $usuarios = Usuarios::all();
+        return view('compras.create', compact('proveedores', 'usuarios'));
     }
 
     public function store(Request $request) {
@@ -43,7 +47,9 @@ class ComprasController extends Controller
 
     public function edit($id) {
         $compra = Compras::findOrFail($id);
-        return view('compras.edit', compact('compra'));
+        $proveedores = Proveedores::all();
+        $usuarios = Usuarios::all();
+        return view('compras.edit', compact('compra', 'proveedores', 'usuarios'));
     }
 
     public function update(Request $request, $id) {

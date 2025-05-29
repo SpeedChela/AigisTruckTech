@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Refacciones;
+use App\Models\Proveedores;
 use Illuminate\Http\Request;
 
 class RefaccionesController extends Controller
@@ -21,8 +22,9 @@ class RefaccionesController extends Controller
 }
 
     public function create() {
-        return view('refacciones.create');
-    }
+    $proveedores = Proveedores::all();
+    return view('refacciones.create', compact('proveedores'));
+}
 
     public function store(Request $request) {
         $request->validate([
@@ -46,9 +48,10 @@ class RefaccionesController extends Controller
     }
 
     public function edit($id) {
-        $refaccion = Refacciones::findOrFail($id);
-        return view('refacciones.edit', compact('refaccion'));
-    }
+    $refaccion = Refacciones::findOrFail($id);
+    $proveedores = Proveedores::all();
+    return view('refacciones.edit', compact('refaccion', 'proveedores'));
+}
 
     public function update(Request $request, $id) {
         $request->validate([

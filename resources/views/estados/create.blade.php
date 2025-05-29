@@ -5,16 +5,19 @@
     <h1>Crear Estado</h1>
     <form action="{{ route('estados.store') }}" method="POST">
         @csrf
-        <label for="pais_id">País</label>
-        <select name="pais_id" id="pais_id" required>
-            <option value="">Seleccionar país</option>
-            @foreach($paises as $id => $nombre)
-                <option value="{{ $id }}">{{ $nombre }}</option>
-            @endforeach
-        </select>
-        <br><br>
         <label for="nombre">Nombre del estado</label>
         <input type="text" name="nombre" id="nombre" placeholder="Ingresa nombre del estado" required>
+        <br><br>
+        <label for="clave">Clave del estado</label>
+        <input type="text" name="clave" id="clave" placeholder="Ingresa clave del estado" required>
+        <br><br>
+        <label for="pais_id">País</label>
+        <select name="pais_id" id="pais_id" required>
+            <option value="">Seleccionar ...</option>
+            @foreach($paises as $pais)
+                <option value="{{ $pais->id }}">{{ $pais->nombre }}</option>
+            @endforeach
+        </select>
         <br><br>
         <label for="status">Estatus:</label>
         <select name="status" id="status" required>

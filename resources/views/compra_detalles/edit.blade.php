@@ -3,22 +3,24 @@
 @section('contenido')
 <div class="container">
     <h1>Editar Detalle de Compra</h1>
-    <form action="{{ route('compra_detalles.update', $compra_detalle->id) }}" method="POST">
-        @csrf
-        @method('PATCH')
+   <form action="{{ route('compra_detalles.update', $compra_detalle->id) }}" method="POST">
+    @csrf
+    @method('PATCH')
         <label for="id_compra">Compra</label>
         <select name="id_compra" id="id_compra" required>
             <option value="">Seleccionar compra</option>
-            @foreach($compras as $id => $nombre)
-                <option value="{{ $id }}" @if(old('id_compra', $compra_detalle->id_compra) == $id) selected @endif>{{ $nombre }}</option>
+            @foreach($compras as $compra)
+                <option value="{{ $compra->id }}" @if(old('id_compra', $compra_detalle->id_compra) == $compra->id) selected @endif>
+                    {{ $compra->id }}
+                </option>
             @endforeach
         </select>
         <br><br>
         <label for="id_producto">Producto</label>
-        <select name="id_producto" id="id_producto" required>
-            <option value="">Seleccionar producto</option>
-            @foreach($refacciones as $id => $nombre)
-                <option value="{{ $id }}" @if(old('id_producto', $compra_detalle->id_producto) == $id) selected @endif>{{ $nombre }}</option>
+       <select name="id_producto" id="id_producto" required>
+            <option value="">Seleccionar refacción</option>
+            @foreach($refacciones as $refaccion)
+                <option value="{{ $refaccion->id }}">{{ $refaccion->nombre }}</option>
             @endforeach
         </select>
         <br><br>

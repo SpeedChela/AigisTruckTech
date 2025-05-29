@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ventas;
+use App\Models\Usuarios;
+use App\Models\Clientes;
 use Illuminate\Http\Request;
 
 class VentasController extends Controller
@@ -21,7 +23,9 @@ class VentasController extends Controller
 }
 
     public function create() {
-        return view('ventas.create');
+        $usuarios = Usuarios::all();
+        $clientes = Clientes::all();
+        return view('ventas.create', compact('usuarios', 'clientes'));
     }
 
     public function store(Request $request) {
@@ -43,7 +47,9 @@ class VentasController extends Controller
 
     public function edit($id) {
         $venta = Ventas::findOrFail($id);
-        return view('ventas.edit', compact('venta'));
+        $usuarios = Usuarios::all();
+        $clientes = Clientes::all();
+        return view('ventas.edit', compact('venta', 'usuarios', 'clientes'));
     }
 
     public function update(Request $request, $id) {
