@@ -88,7 +88,7 @@
         <br><br>
         
         <button type="submit">Guardar Cliente</button>
-        <br>
+        <br><br>
         <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

@@ -21,7 +21,7 @@
         </select>
         <br><br>
         <button type="submit">Guardar Estado de Envío</button>
-        <br>
+        <br><br>
         <a href="{{ route('estado_envios.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

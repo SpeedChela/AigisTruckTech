@@ -90,6 +90,7 @@
         <br><br>
         <button type="submit">Guardar Usuario</button>
         <br>
+        <br>
         <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

@@ -34,6 +34,7 @@
         <br><br>
         <button type="submit">Guardar Venta</button>
         <br>
+        <br>
         <a href="{{ route('ventas.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

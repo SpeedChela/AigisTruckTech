@@ -134,7 +134,7 @@ $(document).ready(function() {
             </tbody>
           </table>
           <ul class="actions">
-            <li><a href="{{ asset('cruds') }}" class="btn btn-secondary btn-lg">Regresar</a></li>
+            <li><a href="{{ url('/') }}" class="btn btn-secondary btn-lg">Regresar</a></li>
           </ul>
         </div>
       </section>

@@ -14,6 +14,7 @@
         <br><br>
         <button type="submit">Guardar País</button>
         <br>
+        <br>
         <a href="{{ route('paises.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

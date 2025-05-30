@@ -24,7 +24,7 @@
         <input type="email" name="correo" id="correo" placeholder="Ingresa correo" required>
         <br><br>
         <button type="submit">Guardar Empresa</button>
-        <br>
+        <br><br>
         <a href="{{ route('empresas.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

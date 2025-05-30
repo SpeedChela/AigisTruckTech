@@ -21,7 +21,7 @@
         </select>
         <br><br>
         <button type="submit">Guardar Estado</button>
-        <br>
+        <br><br>
         <a href="{{ route('estados.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

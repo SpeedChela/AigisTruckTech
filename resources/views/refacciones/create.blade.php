@@ -28,6 +28,7 @@
         <br><br>
         <button type="submit">Guardar Refacción</button>
         <br>
+        <br>
         <a href="{{ route('refacciones.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

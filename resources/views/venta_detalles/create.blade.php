@@ -32,6 +32,7 @@
         <br><br>
         <button type="submit">Guardar Detalle de Venta</button>
         <br>
+        <br>
         <a href="{{ route('venta_detalles.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

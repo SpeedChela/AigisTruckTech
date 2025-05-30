@@ -56,6 +56,7 @@
 
         <button type="submit">Guardar Municipio</button>
         <br>
+        <br>
         <a href="{{ route('municipios.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>

@@ -31,7 +31,7 @@
         <input type="number" name="subtotal" id="subtotal" placeholder="Ingresa subtotal" step="0.01" required>
         <br><br>
         <button type="submit">Guardar Detalle</button>
-        <br>
+        <br><br>
         <a href="{{ route('compra_detalles.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
