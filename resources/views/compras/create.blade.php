@@ -29,6 +29,8 @@
         <input type="number" name="total" id="total" placeholder="Ingresa total" step="0.01" required>
         <br><br>
         <button type="submit">Guardar Compra</button>
+        <br>
+        <a href="{{ route('compras.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
 @endsection

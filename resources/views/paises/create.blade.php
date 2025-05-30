@@ -13,6 +13,8 @@
         <input type="text" name="clave" id="clave" placeholder="Ingresa clave del país" required>
         <br><br>
         <button type="submit">Guardar País</button>
+        <br>
+        <a href="{{ route('paises.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
 @endsection

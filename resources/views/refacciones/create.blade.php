@@ -27,6 +27,8 @@
         <input type="number" name="stock" id="stock" placeholder="Ingresa stock" required>
         <br><br>
         <button type="submit">Guardar Refacción</button>
+        <br>
+        <a href="{{ route('refacciones.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
 @endsection

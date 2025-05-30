@@ -22,6 +22,17 @@ class MunicipiosController extends Controller
         ]);
     }
 
+    public function getMunicipiosByEstado($estado_id)
+    {
+        $municipios = Municipios::where('estado_id', $estado_id)
+                            ->where('status', 1)
+                            ->select('id', 'nombre')
+                            ->orderBy('nombre')
+                            ->get();
+        
+        return response()->json($municipios);
+    }
+
     public function create()
     {
         $paises = Paises::where('status', 1)

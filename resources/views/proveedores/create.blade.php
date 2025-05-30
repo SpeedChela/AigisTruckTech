@@ -24,6 +24,8 @@
         </select>
         <br><br>
         <button type="submit">Guardar Proveedor</button>
+        <br>
+        <a href="{{ route('proveedores.index') }}" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
 @endsection
