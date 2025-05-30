@@ -48,6 +48,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="inventarioDropdown">
                     <a class="dropdown-item" href="{{ url('refacciones') }}">Refacciones</a>
+                    <a class="dropdown-item" href="{{ url('fotos_productos') }}">Fotos de Productos</a>
                 </div>
             </li>
 
@@ -77,44 +78,3 @@
         </ul>
     </div>
 </nav>
-
-<style>
-.navbar-nav {
-    flex-wrap: wrap;
-}
-
-.nav-item {
-    margin: 0 5px;
-}
-
-.nav-link {
-    padding: 8px 15px !important;
-    font-size: 0.9rem;
-    white-space: nowrap;
-}
-
-.dropdown-menu {
-    min-width: 200px;
-}
-
-.dropdown-item {
-    padding: 8px 20px;
-    font-size: 0.9rem;
-}
-
-@media (max-width: 991px) {
-    .navbar-nav {
-        padding: 10px;
-    }
-    
-    .nav-item {
-        width: 100%;
-        margin: 2px 0;
-    }
-    
-    .dropdown-menu {
-        border: none;
-        padding-left: 20px;
-    }
-}
-</style>
