@@ -1,9 +1,10 @@
 <?php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Fotos_productos;
 use App\Models\Productos;
-
-
 
 class Fotos_productosController extends Controller
 {
@@ -14,7 +15,7 @@ class Fotos_productosController extends Controller
     {
         $fotos_productos = Fotos_productos::where('status', 1)
                   ->orderBy('producto_id')->get();
-        return view('Fotos_productos.index')->with('fotos_productos', $fotos_productos);
+        return view('fotos_productos.index')->with('fotos_productos', $fotos_productos);
     }
 
     /**
@@ -24,7 +25,7 @@ class Fotos_productosController extends Controller
     {
         $productos = Productos::select('id','nombre')
                   ->orderBy('nombre')->get();
-        return view('Fotos_productos.create')
+        return view('fotos_productos.create')
                 ->with('productos',$productos);
     }
 
@@ -33,17 +34,15 @@ class Fotos_productosController extends Controller
      */
     public function store(Request $request)
     {
-        $datos   = $request->all();
-        $hora    = date ("h:i:s");
-        $fecha   = date ("d-m-Y");
+        $datos = $request->all();
+        $hora  = date("h:i:s");
+        $fecha = date("d-m-Y");
         $prefijo = $fecha."_".$hora;
 
         $archivo = $request->file('foto');
-
         $nombre_foto = $prefijo."_".$archivo->getClientOriginalName();
-        //$nombre_foto = $archivo->hashName(); // Podemos generar un nombre aleatorio
 
-        $r1   = Storage::disk('fotografias')->put($nombre_foto,  \File::get($archivo) );
+        $r1 = Storage::disk('fotografias')->put($nombre_foto, \File::get($archivo));
 
         if($r1){
             $datos['ruta'] = $nombre_foto;
@@ -52,27 +51,26 @@ class Fotos_productosController extends Controller
         }else{
             return 'Error al intentar guardar la foto <br /><br /><a href="../fotos_productos" >REGRESAR A LAS FOTOS PRODUCTOS</a>';
         }
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         $fotos_producto = Fotos_productos::find($id);
-        return view('Fotos_productos.read')->with('fotos_producto', $fotos_producto);
+        return view('fotos_productos.read')->with('fotos_producto', $fotos_producto);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         $fotos_producto = Fotos_productos::find($id);
         $productos = Productos::select('id','nombre')
                   ->orderBy('nombre')->get();
-        return view('Fotos_productos.edit')
+        return view('fotos_productos.edit')
                ->with('fotos_producto', $fotos_producto)
                ->with('productos',$productos);
     }
@@ -80,21 +78,19 @@ class Fotos_productosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $datos = $request->all();
         $fotos_producto = Fotos_productos::find($id);
 
-        $hora    = date ("h:i:s");
-        $fecha   = date ("d-m-Y");
+        $hora  = date("h:i:s");
+        $fecha = date("d-m-Y");
         $prefijo = $fecha."_".$hora;
 
         $archivo = $request->file('foto');
-
         $nombre_foto = $prefijo."_".$archivo->getClientOriginalName();
-        //$nombre_foto = $archivo->hashName(); // Podemos generar un nombre aleatorio
 
-        $r1   = Storage::disk('fotografias')->put($nombre_foto,  \File::get($archivo) );
+        $r1 = Storage::disk('fotografias')->put($nombre_foto, \File::get($archivo));
 
         if($r1){
             $datos['ruta'] = $nombre_foto;
@@ -103,13 +99,12 @@ class Fotos_productosController extends Controller
         }else{
             return 'Error al intentar guardar la foto <br /><br /><a href="../fotos_productos" >REGRESAR A LAS FOTOS PRODUCTOS</a>';
         }
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $fotos_producto = Fotos_productos::find($id);
         $fotos_producto->status = 0;

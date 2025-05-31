@@ -8,7 +8,7 @@
     <div class="container">
       <div class="col-md-10 col-md-offset-1">
 
-  <a href="{!! asset('fotos_productos/create') !!}" class="btn btn-primary btn-lg" >Crear una nueva Foto de Producto</a>
+  <a href="{ asset('fotos_productos/create') }" class="btn btn-primary btn-lg" >Crear una nueva Foto de Producto</a>
     <table border="1">
         <tr>
             <th>ID</th>
