@@ -1,5 +1,18 @@
 @extends('template.master')
 
+@push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+.input-group-text {
+  min-width: 40px;
+  justify-content: center;
+}
+.d-none {
+  display: none !important;
+}
+</style>
+@endpush
+
 @section('contenido')
 <div id="wrapper">
   <div id="main">
@@ -32,10 +45,21 @@
                   <td>{{ $proveedor->id }}</td>
                   <td>{{ $proveedor->nombre }}</td>
                   <td>
-                    <input type="text"
-                          value="{{ $proveedor->telefono }}"
-                          class="form-control form-control-sm"
-                          onblur="actualizarTelefono({{ $proveedor->id }}, this.value)">
+                    <div class="input-group">
+                      <input type="text"
+                            value="{{ $proveedor->telefono }}"
+                            class="form-control form-control-sm telefono-input"
+                            data-id="{{ $proveedor->id }}"
+                            data-original-value="{{ $proveedor->telefono }}"
+                            maxlength="20">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="fas fa-check text-success d-none check-icon"></i>
+                          <i class="fas fa-times text-danger d-none error-icon"></i>
+                          <i class="fas fa-spinner fa-spin d-none loading-icon"></i>
+                        </span>
+                      </div>
+                    </div>
                   </td>
                   <td>{{ $proveedor->email }}</td>
                   <td>{{ $proveedor->municipio_id }}</td>
@@ -61,24 +85,110 @@
     </article>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@push('scripts')
 <script>
-function actualizarTelefono(id, telefono) {
-    $.ajax({
-        url: '/proveedores/' + id + '/actualizar-telefono',
-        method: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-            telefono: telefono
-        },
-        success: function(response) {
-            // Opcional: muestra un mensaje o cambia el color de la celda
-            // alert('Teléfono actualizado');
-        },
-        error: function(xhr) {
-            alert('Error al actualizar el teléfono');
+$(document).ready(function() {
+    // Configurar AJAX para incluir el token CSRF en todas las peticiones
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
         }
     });
-}
+
+    let timeoutId;
+    
+    $('.telefono-input').on('input', function() {
+        const $input = $(this);
+        const $group = $input.closest('.input-group');
+        const $loading = $group.find('.loading-icon');
+        const $check = $group.find('.check-icon');
+        const $error = $group.find('.error-icon');
+        
+        // Guardar el valor original para comparar
+        const originalValue = $input.data('original-value') || $input.val();
+        $input.data('original-value', originalValue);
+        
+        clearTimeout(timeoutId);
+        
+        // Solo actualizar si el valor ha cambiado
+        if ($input.val() !== originalValue) {
+            timeoutId = setTimeout(function() {
+                actualizarTelefono($input, $loading, $check, $error);
+            }, 500);
+        }
+    });
+    
+    function actualizarTelefono($input, $loading, $check, $error) {
+        const id = $input.data('id');
+        const telefono = $input.val();
+        
+        // Ocultar todos los iconos y mostrar loading
+        $check.addClass('d-none');
+        $error.addClass('d-none');
+        $loading.removeClass('d-none');
+        
+        $.ajax({
+            url: '{{ url("/") }}/proveedores/' + id + '/actualizar-telefono',
+            method: 'POST',
+            data: {
+                telefono: telefono
+            },
+            success: function(response) {
+                console.log('Respuesta del servidor:', response);
+                if (response.success) {
+                    $loading.addClass('d-none');
+                    $check.removeClass('d-none');
+                    
+                    // Actualizar el valor original después de un guardado exitoso
+                    $input.data('original-value', response.telefono);
+                    
+                    // Ocultar el check después de 2 segundos
+                    setTimeout(function() {
+                        $check.addClass('d-none');
+                    }, 2000);
+                } else {
+                    handleError($loading, $error, response.message || 'Error al actualizar');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en la petición AJAX:', {
+                    status: status,
+                    error: error,
+                    response: xhr.responseText
+                });
+                
+                let errorMsg;
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    errorMsg = response.message || 'Error al actualizar el teléfono';
+                } catch (e) {
+                    errorMsg = 'Error al actualizar el teléfono: ' + error;
+                }
+                
+                handleError($loading, $error, errorMsg);
+                
+                // Revertir al valor original en caso de error
+                $input.val($input.data('original-value'));
+            }
+        });
+    }
+    
+    function handleError($loading, $error, errorMsg) {
+        $loading.addClass('d-none');
+        $error.removeClass('d-none');
+        
+        // Mostrar mensaje de error
+        console.error('Error:', errorMsg);
+        alert(errorMsg);
+        
+        // Ocultar el error después de 2 segundos
+        setTimeout(function() {
+            $error.addClass('d-none');
+        }, 2000);
+    }
+});
 </script>
+@endpush
+
 @endsection

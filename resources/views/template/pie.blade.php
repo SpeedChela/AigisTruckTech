@@ -1,4 +1,3 @@
-
   <!-- footer section -->
   <section class="footer_section">
     <div class="container">
@@ -29,6 +28,7 @@
   </script>
   <!-- End Google Map -->
 
+  @stack('scripts')
 </body>
 
 </html>

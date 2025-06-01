@@ -11,17 +11,17 @@ use Illuminate\Http\Request;
 class ClientesController extends Controller
 {
     public function index()
-    {
+{
         $clientes = Clientes::all();
-        return view('clientes.index', [
-            'titulo' => 'Clientes',
-            'singular' => 'Cliente',
-            'ruta' => 'clientes',
-            'columnas' => ['ID', 'Nombre', 'Teléfono', 'Email', 'Municipio', 'Status'],
-            'campos' => ['id', 'nombre', 'telefono', 'email', 'municipio_id', 'status'],
-            'registros' => $clientes
-        ]);
-    }
+    return view('clientes.index', [
+        'titulo' => 'Clientes',
+        'singular' => 'Cliente',
+        'ruta' => 'clientes',
+        'columnas' => ['ID', 'Nombre', 'Teléfono', 'Email', 'Municipio', 'Status'],
+        'campos' => ['id', 'nombre', 'telefono', 'email', 'municipio_id', 'status'],
+        'registros' => $clientes
+    ]);
+}
 
     public function create()
     {
@@ -30,7 +30,7 @@ class ClientesController extends Controller
                       ->get();
         
         return view('clientes.create', compact('paises'));
-    }
+}
 
     public function store(Request $request)
     {

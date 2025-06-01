@@ -12,13 +12,13 @@ class Fotos_productos extends Model
     protected $table = 'fotos_productos';
 
     protected $fillable = [
-        'producto_id',
+        'id_producto',
         'ruta',
         'status'
     ];
 
     public function producto()
     {
-        return $this->belongsTo(Productos::class, 'producto_id');
+        return $this->belongsTo(Productos::class, 'id_producto');
     }
 }

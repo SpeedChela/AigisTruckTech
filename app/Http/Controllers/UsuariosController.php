@@ -8,25 +8,25 @@ use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
 {
-    public function index(Request $request)
-    {
-        $query = \App\Models\Usuarios::query();
+public function index(Request $request)
+{
+    $query = \App\Models\Usuarios::query();
 
-        // Filtros
-        if ($request->filled('nombre')) {
-            $query->where('nombre', 'like', '%' . $request->nombre . '%');
-        }
-        if ($request->filled('email')) {
-            $query->where('email', 'like', '%' . $request->email . '%');
-        }
-        if ($request->filled('rol')) {
-            $query->where('rol', $request->rol);
-        }
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
+    // Filtros
+    if ($request->filled('nombre')) {
+        $query->where('nombre', 'like', '%' . $request->nombre . '%');
+    }
+    if ($request->filled('email')) {
+        $query->where('email', 'like', '%' . $request->email . '%');
+    }
+    if ($request->filled('rol')) {
+        $query->where('rol', $request->rol);
+    }
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
 
-        $usuarios = $query->get();
+    $usuarios = $query->get();
 
         if ($request->ajax()) {
             return response()->json([
@@ -34,29 +34,29 @@ class UsuariosController extends Controller
             ]);
         }
 
-        return view('usuarios.index', [
-            'titulo' => 'Usuarios',
-            'singular' => 'Usuario',
-            'ruta' => 'usuarios',
-            'columnas' => ['ID', 'Nombre', 'Email', 'Teléfono', 'Rol', 'Status'],
-            'campos' => ['id', 'nombre', 'email', 'telefono', 'rol', 'status'],
-            'registros' => $usuarios
-        ]);
-    }
+    return view('usuarios.index', [
+        'titulo' => 'Usuarios',
+        'singular' => 'Usuario',
+        'ruta' => 'usuarios',
+        'columnas' => ['ID', 'Nombre', 'Email', 'Teléfono', 'Rol', 'Status'],
+        'campos' => ['id', 'nombre', 'email', 'telefono', 'rol', 'status'],
+        'registros' => $usuarios
+    ]);
+}
 
-    public function create()
-    {
-        // Trae todos los países activos
-        $paises = \App\Models\Paises::select('id','nombre')
-            ->where('status', 1)
-            ->orderBy('nombre')
-            ->get();
+public function create()
+{
+    // Trae todos los países activos
+    $paises = \App\Models\Paises::select('id','nombre')
+        ->where('status', 1)
+        ->orderBy('nombre')
+        ->get();
 
-        // Retorna la vista con los países
-        return view('usuarios.create')
-            ->with('paises', $paises);
-            // ->with('roles', $roles); // Solo si quieres usar roles desde el controlador
-    }
+    // Retorna la vista con los países
+    return view('usuarios.create')
+        ->with('paises', $paises);
+        // ->with('roles', $roles); // Solo si quieres usar roles desde el controlador
+}
 
     public function store(Request $request) {
         $request->validate([
@@ -79,16 +79,16 @@ class UsuariosController extends Controller
     }
 
     public function edit($id)
-    {
-        $usuario = \App\Models\Usuarios::findOrFail($id);
-        $paises = \App\Models\Paises::select('id','nombre')
-            ->where('status', 1)
-            ->orderBy('nombre')->get();
+{
+    $usuario = \App\Models\Usuarios::findOrFail($id);
+    $paises = \App\Models\Paises::select('id','nombre')
+        ->where('status', 1)
+        ->orderBy('nombre')->get();
 
-        return view('usuarios.edit')
-            ->with('usuario', $usuario)
-            ->with('paises', $paises);
-    }
+    return view('usuarios.edit')
+        ->with('usuario', $usuario)
+        ->with('paises', $paises);
+}
 
     public function update(Request $request, $id) {
         $request->validate([

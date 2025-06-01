@@ -6,18 +6,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Usuarios extends Authenticatable
+class Users extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'nombre',
+        'ap_pat',
+        'ap_mat',
+        'telefono',
+        'direccion',
+        'municipio_id',
+        'id_tipo_usu',
+        'status',
+        'colonia',
+        'cp',
+        'fecha_naci',
+        'username',
+        'email',
+        'password',
+    ];
 
     protected $hidden = [
         'password',
         'remember_token',
-    ];
-    
-    protected $table = 'usuarios';
-    protected $fillable = [
-        'nombre', 'email', 'password', 'telefono', 'rol', 'status'
     ];
 
     protected function casts(): array
@@ -28,23 +40,18 @@ class Usuarios extends Authenticatable
         ];
     }
 
-    public function esSuperusuario()
-    {
-        return $this->rol === 1;
-    }
-
     public function esAdministrador()
     {
-        return $this->rol === 2;
+        return $this->id_tipo_usu === 1;
     }
 
-    public function esEmpleado()
+    public function esSupervisor()
     {
-        return $this->rol === 3;
+        return $this->id_tipo_usu === 2;
     }
 
     public function esCliente()
     {
-        return $this->rol === 4;
+        return $this->id_tipo_usu === 3;
     }
-}
+} 

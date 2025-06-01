@@ -33,6 +33,7 @@
   <!-- responsive style -->
   <link href="{{ asset('estilo/css/responsive.css') }}" rel="stylesheet" />
 
+  @stack('styles')
 </head>
 
 <body>

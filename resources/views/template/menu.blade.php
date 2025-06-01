@@ -48,7 +48,6 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="inventarioDropdown">
                     <a class="dropdown-item" href="{{ url('refacciones') }}">Refacciones</a>
-                    <a class="dropdown-item" href="{{ url('fotos_productos') }}">Fotos de Productos</a>
                 </div>
             </li>
 
@@ -74,6 +73,11 @@
                     <a class="dropdown-item" href="{{ url('ventas') }}">Ventas</a>
                     <a class="dropdown-item" href="{{ url('venta_detalles') }}">Detalles de Ventas</a>
                 </div>
+            </li>
+
+            <!-- Correo Electrónico -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('form_enviar_correo') }}">Enviar Correo</a>
             </li>
         </ul>
     </div>

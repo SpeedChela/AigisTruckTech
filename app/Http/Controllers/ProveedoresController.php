@@ -72,10 +72,53 @@ class ProveedoresController extends Controller
 
     public function actualizarTelefono(Request $request, $id)
     {
-        $proveedor = \App\Models\Proveedores::findOrFail($id);
-        $proveedor->telefono = $request->telefono;
-        $proveedor->save();
+        try {
+            \Log::info('Actualizando teléfono para proveedor ID: ' . $id);
+            \Log::info('Datos recibidos:', $request->all());
 
-        return response()->json(['success' => true]);
+            $request->validate([
+                'telefono' => 'nullable|max:20'
+            ]);
+
+            $proveedor = \App\Models\Proveedores::findOrFail($id);
+            $telefonoAnterior = $proveedor->telefono;
+            $proveedor->telefono = $request->telefono;
+            $proveedor->save();
+
+            \Log::info('Teléfono actualizado correctamente', [
+                'id' => $id,
+                'telefono_anterior' => $telefonoAnterior,
+                'telefono_nuevo' => $proveedor->telefono
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Teléfono actualizado correctamente',
+                'telefono' => $proveedor->telefono
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            \Log::error('Proveedor no encontrado', ['id' => $id]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Proveedor no encontrado'
+            ], 404);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Error de validación', ['errors' => $e->errors()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error de validación: ' . $e->getMessage(),
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            \Log::error('Error al actualizar teléfono', [
+                'id' => $id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar el teléfono: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
