@@ -18,6 +18,6 @@ class MDusu_Empleado
             return redirect()->route('login')->with('error', 'Debes iniciar sesión primero.');
         }
 
-        return redirect()->route('home')->with('error', 'No tienes permisos de empleado para acceder a esta sección.');
+        return back()->with('error', 'ACCESO DENEGADO, no tiene los permisos necesarios');
     }
 } 

@@ -35,16 +35,30 @@ class Usuarios extends Authenticatable
 
     public function esAdministrador()
     {
+        // El administrador tiene acceso a todo excepto usuarios
         return $this->rol === 2;
     }
 
     public function esEmpleado()
     {
-        return $this->rol === 3;
+        // El empleado tiene sus propios permisos o hereda del admin
+        return $this->rol === 3 || $this->esAdministrador();
     }
 
     public function esCliente()
     {
         return $this->rol === 4;
+    }
+
+    // Método helper para verificar cualquier rol
+    public function tieneRol($rol)
+    {
+        if ($this->esSuperusuario()) {
+            return true;
+        }
+        if ($this->esAdministrador() && $rol !== 1) {  // Admin tiene todo excepto rol 1 (superusuario)
+            return true;
+        }
+        return $this->rol === $rol;
     }
 }

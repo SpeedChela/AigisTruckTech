@@ -19,6 +19,9 @@
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{{ asset('estilo/css/bootstrap.css') }}" />
 
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
   <!-- fonts style -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
@@ -26,6 +29,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
   <!-- font awesome style -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="{{ asset('estilo/css/font-awesome.min.css') }}" rel="stylesheet" />
 
   <!-- Custom styles for this template -->
@@ -44,24 +48,31 @@
       <div class="header_top">
         <div class="container-fluid ">
           <div class="contact_nav">
-            <a href="">
-              <i class="fa fa-phone" aria-hidden="true"></i>
-              <span>
-                Call : +01 123455678990
-              </span>
-            </a>
-            <a href="">
+            <a href="mailto:contacto@aigistrucktech.com" class="btn btn-link">
               <i class="fa fa-envelope" aria-hidden="true"></i>
               <span>
-                Email : demo@gmail.com
+                Contáctanos por correo
               </span>
             </a>
-            <a href="">
-              <i class="fa fa-map-marker" aria-hidden="true"></i>
-              <span>
-                Location
-              </span>
-            </a>
+            @guest
+              <a href="{{ route('login') }}" class="btn btn-link">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span>
+                  Iniciar Sesión
+                </span>
+              </a>
+            @else
+              <a href="{{ route('logout') }}" class="btn btn-link"
+                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span>
+                  Cerrar Sesión
+                </span>
+              </a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+              </form>
+            @endguest
           </div>
         </div>
       </div>

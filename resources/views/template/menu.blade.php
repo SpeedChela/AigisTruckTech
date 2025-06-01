@@ -75,9 +75,16 @@
                 </div>
             </li>
 
+            <!-- Gráficas -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('graficas.index') }}">
+                    <i class="fas fa-chart-line"></i> Gráficas
+                </a>
+            </li>
+
             <!-- Correo Electrónico -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('form_enviar_correo') }}">Enviar Correo</a>
+                <a class="nav-link" href="{{ route('form_enviar_correo') }}">Enviar Correo</a>
             </li>
         </ul>
     </div>

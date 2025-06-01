@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compra_detalles extends Model
 {
-    protected $table = 'compras';
+    protected $table = 'compra_detalles';
     protected $fillable = [
-    'id_proveedor', 'id_usuario', 'fecha_compra', 'total', 'status'
+        'id_compra', 'id_producto', 'cantidad', 'precio_individual', 'subtotal'
     ];
 }
