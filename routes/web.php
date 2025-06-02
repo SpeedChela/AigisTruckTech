@@ -12,7 +12,7 @@ use App\Http\Controllers\{
     ComprasController,
     CompraDetallesController,
     VentasController,
-    VentaDetallesController,
+    Venta_detallesController,
     EstadoEnviosController,
     UsuariosController,
     GraficasController,
@@ -68,9 +68,10 @@ Route::middleware(['auth', 'MDusu_Superusuario'])->group(function () {
     
     // Gestión de ventas
     Route::resource('ventas', VentasController::class);
-    Route::resource('venta_detalles', VentaDetallesController::class);
+    Route::resource('venta_detalles', Venta_detallesController::class);
     
     // Reportes y gráficas
+    Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes.index');
     Route::get('/reportes/ventas/{tipo}', [ReportesController::class, 'reporteVentas'])->name('reportes.ventas');
     Route::get('/reportes/compras/{tipo}', [ReportesController::class, 'reporteCompras'])->name('reportes.compras');
     Route::get('/reportes/inventario/{tipo}', [ReportesController::class, 'reporteInventario'])->name('reportes.inventario');
@@ -110,9 +111,10 @@ Route::middleware(['auth', 'MDusu_Administrador'])->group(function () {
     
     // Gestión de ventas
     Route::resource('ventas', VentasController::class);
-    Route::resource('venta_detalles', VentaDetallesController::class);
+    Route::resource('venta_detalles', Venta_detallesController::class);
     
     // Reportes y gráficas
+    Route::get('/reportes', [ReportesController::class, 'index'])->name('reportes.index');
     Route::get('/reportes/ventas/{tipo}', [ReportesController::class, 'reporteVentas'])->name('reportes.ventas');
     Route::get('/reportes/compras/{tipo}', [ReportesController::class, 'reporteCompras'])->name('reportes.compras');
     Route::get('/reportes/inventario/{tipo}', [ReportesController::class, 'reporteInventario'])->name('reportes.inventario');
@@ -138,7 +140,7 @@ Route::middleware(['auth', 'MDusu_Empleado'])->group(function () {
     
     // Gestión de ventas
     Route::resource('ventas', VentasController::class);
-    Route::resource('venta_detalles', VentaDetallesController::class);
+    Route::resource('venta_detalles', Venta_detallesController::class);
     
     // Reportes por correo
     Route::get('/reportes/email', [ReporteEmailController::class, 'index'])->name('reportes.email.form');
@@ -184,12 +186,18 @@ Route::get('/tienda-refacciones', [App\Http\Controllers\RefaccionesController::c
 // Rutas para la gestión de fotos de productos
 Route::resource('fotos_productos', FotosProductosController::class);
 
+// Rutas para el POS (Point of Sale)
+Route::get('/pos/venta', [VentasController::class, 'pos'])->name('ventas.pos');
+Route::get('/pos/compra', [ComprasController::class, 'pos'])->name('compras.pos');
+
 // API Routes para Ajax
-Route::prefix('api')->group(function () {
+Route::middleware(['auth'])->prefix('api')->group(function () {
     Route::get('/productos', [App\Http\Controllers\ProductoController::class, 'obtenerProductos']);
     Route::get('/productos/{id}', [App\Http\Controllers\ProductoController::class, 'obtenerDetalleProducto']);
-    Route::get('/refacciones', [App\Http\Controllers\RefaccionesController::class, 'obtenerRefacciones']);
+    Route::get('/refacciones', [App\Http\Controllers\RefaccionesController::class, 'obtenerRefacciones'])->name('api.refacciones');
     Route::get('/refacciones/{id}', [App\Http\Controllers\RefaccionesController::class, 'obtenerDetalleRefaccion']);
+    Route::get('/clientes', [ClientesController::class, 'obtenerClientes'])->name('api.clientes');
+    Route::get('/proveedores', [ProveedoresController::class, 'obtenerProveedores'])->name('api.proveedores');
 });
 
 Auth::routes();

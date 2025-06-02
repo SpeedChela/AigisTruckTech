@@ -65,7 +65,7 @@
             @php $total_general = 0; @endphp
             @foreach($data as $compra)
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($compra->fecha)->format('d/m/Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($compra->fecha_compra)->format('d/m/Y') }}</td>
                     <td>{{ $compra->proveedor->nombre }}</td>
                     <td>
                         @foreach($compra->detalles as $detalle)

@@ -80,7 +80,7 @@
                 @php $total_general = 0; @endphp
                 @foreach($data as $venta)
                     <tr>
-                        <td>{{ \Carbon\Carbon::parse($venta->fecha)->format('d/m/Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($venta->fecha_venta)->format('d/m/Y') }}</td>
                         <td>{{ $venta->cliente->nombre }}</td>
                         <td>
                             <ul>

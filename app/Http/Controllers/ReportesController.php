@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Refaccion;
-use App\Models\Venta;
-use App\Models\Compra;
-use App\Models\DetalleVenta;
-use App\Models\DetalleCompra;
-use App\Models\Proveedor;
+use App\Models\Refacciones;
+use App\Models\Ventas;
+use App\Models\Compras;
+use App\Models\Venta_detalles;
+use App\Models\CompraDetalles;
+use App\Models\Proveedores;
 use Carbon\Carbon;
 
 class ReportesController extends Controller
 {
+    public function index()
+    {
+        return view('reportes.index');
+    }
+
     public function generarPDF($datos, $vistaurl, $tipo)
     {
         $data = $datos;
@@ -36,10 +41,10 @@ class ReportesController extends Controller
         $fecha_fin = $request->get('fecha_fin', Carbon::now());
 
         $vistaurl = "reportes.ventas_periodo";
-        $ventas = Venta::with(['detalles.refaccion', 'cliente'])
+        $ventas = Ventas::with(['detalles.refaccion', 'cliente'])
                       ->where('status', 1)
-                      ->whereBetween('fecha', [$fecha_inicio, $fecha_fin])
-                      ->orderBy('fecha', 'desc')
+                      ->whereBetween('fecha_venta', [$fecha_inicio, $fecha_fin])
+                      ->orderBy('fecha_venta', 'desc')
                       ->get();
 
         return $this->generarPDF($ventas, $vistaurl, $tipo);
@@ -52,10 +57,10 @@ class ReportesController extends Controller
         $fecha_fin = $request->get('fecha_fin', Carbon::now());
 
         $vistaurl = "reportes.compras_periodo";
-        $compras = Compra::with(['detalles.refaccion', 'proveedor'])
+        $compras = Compras::with(['detalles.refaccion', 'proveedor'])
                         ->where('status', 1)
-                        ->whereBetween('fecha', [$fecha_inicio, $fecha_fin])
-                        ->orderBy('fecha', 'desc')
+                        ->whereBetween('fecha_compra', [$fecha_inicio, $fecha_fin])
+                        ->orderBy('fecha_compra', 'desc')
                         ->get();
 
         return $this->generarPDF($compras, $vistaurl, $tipo);
@@ -65,7 +70,7 @@ class ReportesController extends Controller
     public function reporteInventario($tipo)
     {
         $vistaurl = "reportes.inventario";
-        $refacciones = Refaccion::with('proveedor')
+        $refacciones = Refacciones::with('proveedor')
                                ->where('status', 1)
                                ->orderBy('stock', 'asc')
                                ->get();
@@ -76,7 +81,7 @@ class ReportesController extends Controller
     public function reporteProveedores($tipo)
     {
         $vistaurl = "reportes.proveedores";
-        $proveedores = Proveedor::with(['refacciones' => function($query) {
+        $proveedores = Proveedores::with(['refacciones' => function($query) {
                                     $query->where('status', 1);
                                 }])
                                ->where('status', 1)

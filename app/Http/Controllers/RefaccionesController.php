@@ -125,40 +125,36 @@ class RefaccionesController extends Controller
     // Métodos para la tienda con Ajax
     public function obtenerRefacciones(Request $request)
     {
-        $query = Refacciones::where('status', 1);
+        try {
+            $query = Refacciones::where('status', 1);
 
-        if ($request->categoria) {
-            $query->where('categoria', $request->categoria);
-        }
+            if ($request->has('busqueda')) {
+                $busqueda = $request->busqueda;
+                $query->where(function($q) use ($busqueda) {
+                    $q->where('nombre', 'like', "%{$busqueda}%")
+                      ->orWhere('marca', 'like', "%{$busqueda}%")
+                      ->orWhere('categoria', 'like', "%{$busqueda}%");
+                });
+            }
 
-        if ($request->marca) {
-            $query->where('marca', $request->marca);
-        }
-
-        if ($request->busqueda) {
-            $query->where(function($q) use ($request) {
-                $q->where('nombre', 'like', '%' . $request->busqueda . '%')
-                  ->orWhere('marca', 'like', '%' . $request->busqueda . '%')
-                  ->orWhere('categoria', 'like', '%' . $request->busqueda . '%');
-            });
-        }
-
-        $refacciones = $query->get();
-
-        return response()->json([
-            'refacciones' => $refacciones->map(function($refaccion) {
+            $refacciones = $query->get()->map(function($refaccion) {
                 return [
                     'id' => $refaccion->id,
                     'nombre' => $refaccion->nombre,
                     'marca' => $refaccion->marca,
-                    'categoria' => $refaccion->categoria,
-                    'tipo_refaccion' => $refaccion->tipo_refaccion,
                     'precio' => $refaccion->precio,
                     'stock' => $refaccion->stock,
-                    'imagen' => $refaccion->foto ? asset('storage/refacciones/' . $refaccion->foto) : null
+                    'foto_url' => $refaccion->foto ? asset('storage/refacciones/' . $refaccion->foto) : asset('img/no-image.png')
                 ];
-            })
-        ]);
+            });
+            
+            \Log::info('Refacciones encontradas: ' . $refacciones->count());
+            return response()->json($refacciones);
+            
+        } catch (\Exception $e) {
+            \Log::error('Error en obtenerRefacciones: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener refacciones'], 500);
+        }
     }
 
     public function obtenerDetalleRefaccion($id)

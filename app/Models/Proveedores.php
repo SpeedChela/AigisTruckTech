@@ -11,4 +11,14 @@ class Proveedores extends Model
     protected $fillable = [
     'nombre', 'telefono', 'email', 'direccion', 'municipio_id', 'status'
     ];
+
+    public function refacciones()
+    {
+        return $this->hasMany(Refacciones::class, 'id_proveedor');
+    }
+
+    public function municipio()
+    {
+        return $this->belongsTo(Municipios::class, 'municipio_id');
+    }
 }

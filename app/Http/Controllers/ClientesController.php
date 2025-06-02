@@ -11,17 +11,17 @@ use Illuminate\Http\Request;
 class ClientesController extends Controller
 {
     public function index()
-{
+    {
         $clientes = Clientes::all();
-    return view('clientes.index', [
-        'titulo' => 'Clientes',
-        'singular' => 'Cliente',
-        'ruta' => 'clientes',
-        'columnas' => ['ID', 'Nombre', 'Teléfono', 'Email', 'Municipio', 'Status'],
-        'campos' => ['id', 'nombre', 'telefono', 'email', 'municipio_id', 'status'],
-        'registros' => $clientes
-    ]);
-}
+        return view('clientes.index', [
+            'titulo' => 'Clientes',
+            'singular' => 'Cliente',
+            'ruta' => 'clientes',
+            'columnas' => ['ID', 'Nombre', 'Teléfono', 'Email', 'Municipio', 'Status'],
+            'campos' => ['id', 'nombre', 'telefono', 'email', 'municipio_id', 'status'],
+            'registros' => $clientes
+        ]);
+    }
 
     public function create()
     {
@@ -30,7 +30,7 @@ class ClientesController extends Controller
                       ->get();
         
         return view('clientes.create', compact('paises'));
-}
+    }
 
     public function store(Request $request)
     {
@@ -92,5 +92,22 @@ class ClientesController extends Controller
         $cliente = Clientes::findOrFail($id);
         $cliente->delete();
         return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
+    }
+
+    public function obtenerClientes()
+    {
+        try {
+            $clientes = Clientes::where('status', 1)
+                              ->select('id', 'nombre', 'email', 'telefono')
+                              ->orderBy('nombre')
+                              ->get();
+
+            \Log::info('Clientes encontrados: ' . $clientes->count());
+            return response()->json($clientes);
+            
+        } catch (\Exception $e) {
+            \Log::error('Error en obtenerClientes: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener clientes'], 500);
+        }
     }
 }

@@ -73,6 +73,10 @@
                 <div class="dropdown-menu" aria-labelledby="ventasDropdown">
                     <a class="dropdown-item" href="{{ url('ventas') }}">Ventas</a>
                     <a class="dropdown-item" href="{{ url('venta_detalles') }}">Detalles de Ventas</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ route('ventas.pos') }}">
+                        <i class="fas fa-cash-register"></i> Punto de Venta
+                    </a>
                 </div>
             </li>
 
@@ -80,6 +84,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('graficas.index') }}">
                     <i class="fas fa-chart-line"></i> Gráficas
+                </a>
+            </li>
+
+            <!-- Reportes -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('reportes.index') }}">
+                    <i class="fas fa-file-pdf"></i> Reportes PDF
                 </a>
             </li>
 
