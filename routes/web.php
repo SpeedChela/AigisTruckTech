@@ -15,7 +15,8 @@ use App\Http\Controllers\{
     VentaDetallesController,
     EstadoEnviosController,
     UsuariosController,
-    GraficasController
+    GraficasController,
+    FotosProductosController
 };
 
 use App\Http\Controllers\AjaxController;
@@ -71,6 +72,7 @@ Route::middleware(['auth', 'MDusu_Superusuario'])->group(function () {
     
     // Reportes y gráficas
     Route::get('/reportes/ventas/{tipo}', [ReportesController::class, 'reporteVentas'])->name('reportes.ventas');
+    Route::get('/reportes/compras/{tipo}', [ReportesController::class, 'reporteCompras'])->name('reportes.compras');
     Route::get('/reportes/inventario/{tipo}', [ReportesController::class, 'reporteInventario'])->name('reportes.inventario');
     Route::get('/reportes/proveedores/{tipo}', [ReportesController::class, 'reporteProveedores'])->name('reportes.proveedores');
     Route::get('/graficas', [GraficasController::class, 'index'])->name('graficas.index');
@@ -112,6 +114,7 @@ Route::middleware(['auth', 'MDusu_Administrador'])->group(function () {
     
     // Reportes y gráficas
     Route::get('/reportes/ventas/{tipo}', [ReportesController::class, 'reporteVentas'])->name('reportes.ventas');
+    Route::get('/reportes/compras/{tipo}', [ReportesController::class, 'reporteCompras'])->name('reportes.compras');
     Route::get('/reportes/inventario/{tipo}', [ReportesController::class, 'reporteInventario'])->name('reportes.inventario');
     Route::get('/reportes/proveedores/{tipo}', [ReportesController::class, 'reporteProveedores'])->name('reportes.proveedores');
     Route::get('/graficas', [GraficasController::class, 'index'])->name('graficas.index');
@@ -165,6 +168,28 @@ Route::middleware(['auth'])->prefix('graficas')->name('graficas.')->group(functi
 Route::middleware(['auth'])->group(function () {
     Route::get('/form_enviar_correo', [EmailController::class, 'form_enviar_correo'])->name('form_enviar_correo');
     Route::post('/enviar_correo', [EmailController::class, 'enviar_correo'])->name('enviar_correo');
+});
+
+// Rutas para la tienda
+Route::get('/tienda', [App\Http\Controllers\ProductoController::class, 'tienda'])->name('tienda');
+
+// Rutas para la administración de productos
+Route::resource('productos', App\Http\Controllers\ProductoController::class);
+Route::delete('/productos/foto/{id}', [App\Http\Controllers\ProductoController::class, 'eliminarFoto'])->name('productos.eliminarFoto');
+Route::post('/productos/foto/{id}/principal', [App\Http\Controllers\ProductoController::class, 'establecerFotoPrincipal'])->name('productos.establecerFotoPrincipal');
+
+// Rutas para la tienda de refacciones
+Route::get('/tienda-refacciones', [App\Http\Controllers\RefaccionesController::class, 'tienda'])->name('refacciones.tienda');
+
+// Rutas para la gestión de fotos de productos
+Route::resource('fotos_productos', FotosProductosController::class);
+
+// API Routes para Ajax
+Route::prefix('api')->group(function () {
+    Route::get('/productos', [App\Http\Controllers\ProductoController::class, 'obtenerProductos']);
+    Route::get('/productos/{id}', [App\Http\Controllers\ProductoController::class, 'obtenerDetalleProducto']);
+    Route::get('/refacciones', [App\Http\Controllers\RefaccionesController::class, 'obtenerRefacciones']);
+    Route::get('/refacciones/{id}', [App\Http\Controllers\RefaccionesController::class, 'obtenerDetalleRefaccion']);
 });
 
 Auth::routes();

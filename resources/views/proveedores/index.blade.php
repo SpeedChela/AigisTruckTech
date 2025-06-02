@@ -46,8 +46,8 @@
                   <td>{{ $proveedor->nombre }}</td>
                   <td>
                     <div class="input-group">
-                      <input type="text"
-                            value="{{ $proveedor->telefono }}"
+                    <input type="text"
+                          value="{{ $proveedor->telefono }}"
                             class="form-control form-control-sm telefono-input"
                             data-id="{{ $proveedor->id }}"
                             data-original-value="{{ $proveedor->telefono }}"
@@ -128,13 +128,13 @@ $(document).ready(function() {
         $error.addClass('d-none');
         $loading.removeClass('d-none');
         
-        $.ajax({
+    $.ajax({
             url: '{{ url("/") }}/proveedores/' + id + '/actualizar-telefono',
-            method: 'POST',
-            data: {
-                telefono: telefono
-            },
-            success: function(response) {
+        method: 'POST',
+        data: {
+            telefono: telefono
+        },
+        success: function(response) {
                 console.log('Respuesta del servidor:', response);
                 if (response.success) {
                     $loading.addClass('d-none');
@@ -150,7 +150,7 @@ $(document).ready(function() {
                 } else {
                     handleError($loading, $error, response.message || 'Error al actualizar');
                 }
-            },
+        },
             error: function(xhr, status, error) {
                 console.error('Error en la petición AJAX:', {
                     status: status,
@@ -170,9 +170,9 @@ $(document).ready(function() {
                 
                 // Revertir al valor original en caso de error
                 $input.val($input.data('original-value'));
-            }
-        });
-    }
+        }
+    });
+}
     
     function handleError($loading, $error, errorMsg) {
         $loading.addClass('d-none');

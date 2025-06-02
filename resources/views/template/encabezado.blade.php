@@ -65,10 +65,10 @@
               <a href="{{ route('logout') }}" class="btn btn-link"
                  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
-                <span>
+              <span>
                   Cerrar Sesión
-                </span>
-              </a>
+              </span>
+            </a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
               </form>

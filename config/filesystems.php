@@ -46,8 +46,8 @@ return [
 
         'fotografias' => [
             'driver' => 'local',
-            'root' => storage_path('imagenes'),
-            'url' => env('APP_URL').'/storage/imagenes',
+            'root' => storage_path('app/public/fotografias'),
+            'url' => env('APP_URL').'/storage/fotografias',
             'visibility' => 'public',
             'throw' => false,
         ],

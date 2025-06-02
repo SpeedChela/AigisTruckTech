@@ -80,10 +80,10 @@ class ProveedoresController extends Controller
                 'telefono' => 'nullable|max:20'
             ]);
 
-            $proveedor = \App\Models\Proveedores::findOrFail($id);
+        $proveedor = \App\Models\Proveedores::findOrFail($id);
             $telefonoAnterior = $proveedor->telefono;
-            $proveedor->telefono = $request->telefono;
-            $proveedor->save();
+        $proveedor->telefono = $request->telefono;
+        $proveedor->save();
 
             \Log::info('Teléfono actualizado correctamente', [
                 'id' => $id,

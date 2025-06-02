@@ -48,6 +48,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="inventarioDropdown">
                     <a class="dropdown-item" href="{{ url('refacciones') }}">Refacciones</a>
+                    <a class="dropdown-item" href="{{ url('fotos_productos') }}">Fotos de Productos</a>
                 </div>
             </li>
 
@@ -79,6 +80,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('graficas.index') }}">
                     <i class="fas fa-chart-line"></i> Gráficas
+                </a>
+            </li>
+
+            <!-- Tienda -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('refacciones.tienda') }}">
+                    <i class="fas fa-store"></i> Tienda
                 </a>
             </li>
 

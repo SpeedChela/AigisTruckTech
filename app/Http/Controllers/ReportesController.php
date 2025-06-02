@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Refaccion;
 use App\Models\Venta;
+use App\Models\Compra;
 use App\Models\DetalleVenta;
+use App\Models\DetalleCompra;
 use App\Models\Proveedor;
+use Carbon\Carbon;
 
 class ReportesController extends Controller
 {
@@ -27,14 +30,35 @@ class ReportesController extends Controller
     }
 
     // Reporte de Ventas por Período
-    public function reporteVentas($tipo)
+    public function reporteVentas(Request $request, $tipo)
     {
+        $fecha_inicio = $request->get('fecha_inicio', Carbon::now()->startOfMonth());
+        $fecha_fin = $request->get('fecha_fin', Carbon::now());
+
         $vistaurl = "reportes.ventas_periodo";
-        $ventas = Venta::with(['detalles', 'cliente'])
+        $ventas = Venta::with(['detalles.refaccion', 'cliente'])
                       ->where('status', 1)
+                      ->whereBetween('fecha', [$fecha_inicio, $fecha_fin])
                       ->orderBy('fecha', 'desc')
                       ->get();
+
         return $this->generarPDF($ventas, $vistaurl, $tipo);
+    }
+
+    // Reporte de Compras por Período
+    public function reporteCompras(Request $request, $tipo)
+    {
+        $fecha_inicio = $request->get('fecha_inicio', Carbon::now()->startOfMonth());
+        $fecha_fin = $request->get('fecha_fin', Carbon::now());
+
+        $vistaurl = "reportes.compras_periodo";
+        $compras = Compra::with(['detalles.refaccion', 'proveedor'])
+                        ->where('status', 1)
+                        ->whereBetween('fecha', [$fecha_inicio, $fecha_fin])
+                        ->orderBy('fecha', 'desc')
+                        ->get();
+
+        return $this->generarPDF($compras, $vistaurl, $tipo);
     }
 
     // Reporte de Inventario de Refacciones

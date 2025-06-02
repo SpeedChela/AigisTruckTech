@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fotos_productos extends Model
+class FotoProducto extends Model
 {
     use HasFactory;
 
@@ -18,8 +18,13 @@ class Fotos_productos extends Model
         'status'
     ];
 
+    protected $casts = [
+        'es_principal' => 'boolean',
+        'status' => 'boolean'
+    ];
+
     public function producto()
     {
-        return $this->belongsTo(Refacciones::class, 'producto_id');
+        return $this->belongsTo(Producto::class, 'producto_id');
     }
-}
+} 

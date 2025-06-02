@@ -28,10 +28,10 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($registros as $refaccion)
+              @foreach($refacciones as $refaccion)
                 <tr>
                   <td>{{ $refaccion->id }}</td>
-                  <td>{{ $refaccion->id_proveedor }}</td>
+                  <td>{{ $refaccion->proveedor->nombre }}</td>
                   <td>{{ $refaccion->nombre }}</td>
                   <td>{{ $refaccion->marca }}</td>
                   <td>{{ $refaccion->precio }}</td>

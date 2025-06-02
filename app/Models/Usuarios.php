@@ -17,7 +17,7 @@ class Usuarios extends Authenticatable
     
     protected $table = 'usuarios';
     protected $fillable = [
-        'nombre', 'email', 'password', 'telefono', 'rol', 'status'
+    'nombre', 'email', 'password', 'telefono', 'rol', 'status'
     ];
 
     protected function casts(): array

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aigis Truck Tech - @yield('title')</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -71,33 +71,33 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
                 🚛 Aigis Truck Tech
-            </a>
+                </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    @guest
-                        <li class="nav-item">
+                    <ul class="navbar-nav ms-auto">
+                        @guest
+                                <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a>
-                        </li>
-                        <li class="nav-item">
+                                </li>
+                                <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">Registrarse</a>
-                        </li>
-                    @else
-                        <li class="nav-item dropdown">
+                                </li>
+                        @else
+                            <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ Auth::user()->nombre }}
-                            </a>
+                                </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                       document.getElementById('logout-form').submit();">
+                                                     document.getElementById('logout-form').submit();">
                                         Cerrar Sesión
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -105,12 +105,12 @@
                                     </form>
                                 </li>
                             </ul>
-                        </li>
-                    @endguest
-                </ul>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
     <!-- Notificaciones -->
     <div class="notification">
@@ -139,9 +139,9 @@
         @endif
     </div>
 
-    <main class="py-4">
-        @yield('content')
-    </main>
+        <main class="py-4">
+            @yield('content')
+        </main>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

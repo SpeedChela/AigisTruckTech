@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include('template.encabezado')
+@include('template.encabezado')
 </head>
 <body>
     <!-- Notificaciones -->
@@ -31,9 +31,9 @@
         @endif
     </div>
 
-    @include('template.menu')
+@include('template.menu')
     @yield('contenido')
-    @include('template.pie')
+@include('template.pie')
 
     <!-- Script para auto-cerrar las notificaciones -->
     <script>
